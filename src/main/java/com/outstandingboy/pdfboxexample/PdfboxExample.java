@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,7 +43,22 @@ public class PdfboxExample {
         doc.close();
     }
 
+    public static void read() throws IOException {
+        String fileName = "test.pdf";
+        File source = new File(fileName);
+        PDDocument pdfDoc = PDDocument.load(source);
+        PDPage page = pdfDoc.getPage(0);
+
+        PDFTextStripper textStripper = new PDFTextStripper();
+//        textStripper.setStartPage(2);
+//        textStripper.setEndPage(2);
+
+        String text = textStripper.getText(pdfDoc);
+        System.out.println(text);
+    }
+
     public static void main(String[] args) throws IOException {
-        write();
+//        write(); // PDF파일 작성
+        read(); // PDF파일 텍스트 읽기
     }
 }
